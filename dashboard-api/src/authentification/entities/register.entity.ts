@@ -2,10 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsString,
-  Length,
-  Matches,
-  Validate,
-  ValidationArguments,
 } from 'class-validator';
 import { PasswordMatching } from '../decorators/password.decorator';
 
