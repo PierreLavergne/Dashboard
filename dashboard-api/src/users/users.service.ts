@@ -11,4 +11,10 @@ export class UsersService {
   ): Promise<User> {
     return this.prisma.user.create({ data });
   }
+
+  async getUserByEmail(
+    data: Omit<User, 'id' | 'createdAt' | 'updatedAt'>,
+  ): Promise<User> {
+    return this.prisma.user.findUniqueOrThrow({ where: { email: data.email } });
+  }
 }

@@ -35,7 +35,7 @@ class Api {
 
   static Future<void> login(
       {required String email, required String password}) async {
-    final response = await http.post(Routes.register,
+    final response = await http.post(Routes.login,
         body: json.encode(
           {"email": email, "password": password},
         ),

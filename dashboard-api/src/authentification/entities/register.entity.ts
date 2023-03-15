@@ -1,8 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsString,
-} from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 import { PasswordMatching } from '../decorators/password.decorator';
 
 export class RegisterEntity {
