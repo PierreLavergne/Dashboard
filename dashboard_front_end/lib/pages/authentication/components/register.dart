@@ -1,4 +1,4 @@
-import 'package:dashboard_front_end/pages/home.dart';
+import 'package:dashboard_front_end/pages/home/home.dart';
 import 'package:dashboard_front_end/utils/api.dart';
 import 'package:flutter/material.dart';
 

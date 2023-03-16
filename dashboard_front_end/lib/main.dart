@@ -1,5 +1,5 @@
 import 'package:dashboard_front_end/pages/authentication/authentication.dart';
-import 'package:dashboard_front_end/pages/home.dart';
+import 'package:dashboard_front_end/pages/home/home.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
           inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       )),
-      initialRoute: AuthenticationPage.route,
+      initialRoute: HomePage.route,
       routes: {
         HomePage.route: (context) => const HomePage(),
         AuthenticationPage.route: (context) => const AuthenticationPage(),
