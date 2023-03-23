@@ -12,6 +12,7 @@ services:
     volumes:
       - ./src:/src
       - ./node_modules:/node_modules
+      - ./prisma:/prisma
     env_file:
       - .env
 

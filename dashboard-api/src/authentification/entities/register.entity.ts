@@ -16,10 +16,3 @@ export class RegisterEntity {
   @PasswordMatching('password')
   confirmPassword: string;
 }
-
-/*
---- Add later to password and confirmPassword ---
-@Length(8, 20)
-@Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
------------------
-*/

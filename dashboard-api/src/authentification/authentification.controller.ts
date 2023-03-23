@@ -23,14 +23,19 @@ export class AuthentificationController {
   @ApiBody({ type: LoginEntity })
   async login(@Body() login: LoginEntity): Promise<User> {
     return this.usersService
-      .getUserByEmail(login)
+      .getUserByEmail({
+        email: login.email,
+        password: login.password,
+      })
       .then((value: User) => {
         if (login.password === value.password) {
+          console.log("[LOG]  Login | Successful");
           return value;
         }
         throw new UnauthorizedException('Bad password');
       })
       .catch((reason: any) => {
+        console.log("[LOG]  Login | Something Bad");
         if (reason.code === 'P2025') {
           throw new NotFoundException(
             `User with email ${login.email} not found`,
@@ -48,11 +53,16 @@ export class AuthentificationController {
   @ApiBody({ type: RegisterEntity })
   async register(@Body() register: RegisterEntity): Promise<User> {
     return this.usersService
-      .create(register)
+      .create({
+        email: register.email,
+        password: register.password,
+      })
       .then((value: User) => {
+        console.log("[LOG]  Register | Successful");
         return value;
       })
       .catch((reason: any) => {
+        console.log("[LOG]  Register | Something Bad");
         if (reason.code === 'P2002') {
           throw new ConflictException(
             `User with email ${register.email} already exists`,

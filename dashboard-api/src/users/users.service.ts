@@ -9,7 +9,12 @@ export class UsersService {
   async create(
     data: Omit<User, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<User> {
-    return this.prisma.user.create({ data });
+    return this.prisma.user.create({
+      data: {
+        email: data.email,
+        password: data.password,
+      },
+    });
   }
 
   async getUserByEmail(

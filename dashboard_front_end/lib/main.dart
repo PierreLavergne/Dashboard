@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
           inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       )),
-      initialRoute: HomePage.route,
+      initialRoute: AuthenticationPage.route,
       routes: {
         HomePage.route: (context) => const HomePage(),
         AuthenticationPage.route: (context) => const AuthenticationPage(),

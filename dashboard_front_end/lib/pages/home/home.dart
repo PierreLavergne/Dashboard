@@ -1,5 +1,6 @@
 import 'package:dashboard_front_end/pages/home/components/logout_button.dart';
 import 'package:dashboard_front_end/pages/home/components/widget.dart';
+import 'package:dashboard_front_end/pages/home/components/widgets/weather.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<MyWidget> _widgets = [const MyWidget(), const MyWidget()];
+  final List<MyWidget> _widgets = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +45,11 @@ class _HomePageState extends State<HomePage> {
                                 width: 1.5, color: Colors.white),
                             backgroundColor: Colors.black,
                           ),
-                          onPressed: () {
-                            _widgets.add(const MyWidget());
+                          onPressed: () async {
+                            _widgets.add(const MyWidget(
+                              child: WeatherWidget(),
+                            ));
                             setState(() {});
-                            print(_widgets.length);
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(15),
@@ -70,35 +72,27 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: ColoredBox(
                       color: Colors.white,
                       child: Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Center(
                           child: Text(
-                            "6 widgets are running",
-                            style: TextStyle(
+                            "${_widgets.length} widgets are running",
+                            style: const TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: _widgets.length,
-                    itemBuilder: (context, index) {
-                      return new MyWidget();
-                    },
+                  Wrap(
+                    spacing: 8.0,
+                    runSpacing: 4.0,
+                    children: _widgets,
                   )
-                  // ListView(
-                  //   scrollDirection: Axis.vertical,
-                  //   shrinkWrap: true,
-                  //   children: _widgets,
-                  // ),
                 ],
               ),
             )

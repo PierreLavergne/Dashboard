@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MyWidget extends StatefulWidget {
-  const MyWidget({Key? key}) : super(key: key);
+  const MyWidget({super.key, required this.child});
+
+  final Widget child;
 
   @override
   State<MyWidget> createState() => _MyWidgetState();
@@ -10,9 +12,10 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Colors.red,
-      child: Text("CACA"),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: widget.child,
     );
   }
 }

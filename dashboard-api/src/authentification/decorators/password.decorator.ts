@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import {
   registerDecorator,
   ValidationArguments,
@@ -27,6 +28,9 @@ export class PasswordMatchingConstraint
 {
   validate(value: string, args: ValidationArguments) {
     const relatedValue: string = (args.object as any)[args.constraints[0]];
-    return value === relatedValue;
+    if (!(value === relatedValue)) {
+      throw new UnauthorizedException();
+    }
+    return true;
   }
 }
