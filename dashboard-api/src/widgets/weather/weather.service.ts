@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 
 @Injectable()
 export class WeatherService {
-  async getWeatherInfos(data: any): Promise<WeatherResponse> {
+  async getWeatherInfos(userId: string, data: any): Promise<WeatherResponse> {
     if (data.location == undefined) {
       throw new BadRequestException();
     }

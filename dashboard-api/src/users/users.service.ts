@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
 
@@ -20,6 +20,9 @@ export class UsersService {
   async getUserByEmail(
     data: Omit<User, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<User> {
+    if (data.email == undefined) {
+      throw new BadRequestException();
+    }
     return this.prisma.user.findUniqueOrThrow({ where: { email: data.email } });
   }
 }

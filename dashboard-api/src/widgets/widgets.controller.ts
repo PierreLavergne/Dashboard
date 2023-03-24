@@ -8,29 +8,29 @@ import {
   Post,
 } from '@nestjs/common';
 import { WidgetsService } from './widgets.service';
-import { ApiBearerAuth, ApiBody, ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { NewWidgetEntity } from './entities/newWidget.entity';
-import { Widget } from '@prisma/client';
+import { Widget, WidgetName } from '@prisma/client';
 import { WeatherService } from './weather/weather.service';
+import { SpotifyService } from './spotify/spotify.service';
 
 @Controller('widgets')
 export class WidgetsController {
   constructor(
     private readonly widgetsService: WidgetsService,
-    private readonly weatherService: WeatherService,
-  ) {}
-
-  widgets: Map<string, Function> = new Map<string, Function>([
-    ['WEATHER_TEMP', this.weatherService.getWeatherInfos],
-  ]);
+    private readonly weather: WeatherService,
+    private readonly spotify: SpotifyService,
+    private readonly widgets: Map<string, Function>
+  ) {
+  }
 
   @Get('')
   @ApiOperation({ summary: 'Get all widgets' })
-  getAll(): void {}
+  getAll(): void { }
 
   @Get(':serviceId')
   @ApiOperation({ summary: 'Get widgets by serviceId' })
-  getByService(): void {}
+  getByService(): void { }
 
   @Post('')
   @ApiBody({ type: NewWidgetEntity })
@@ -38,7 +38,7 @@ export class WidgetsController {
   async newWidget(
     @Body() newWidget: NewWidgetEntity,
     @Headers('User') userId: string,
-  ): Promise<Widget> {
+  ): Promise<any> {
     return this.widgetsService
       .create({
         userId: userId,
@@ -46,13 +46,12 @@ export class WidgetsController {
         data: newWidget.data,
       })
       .then(async (value: Widget) => {
-        const widgetFunction: Function | undefined = this.widgets.get(
-          value.description,
-        );
-        if (widgetFunction == undefined) {
-          throw new BadRequestException();
-        }
-        return widgetFunction(value.data);
+        if (value.description === WidgetName.WEATHER_TEMP)
+          return this.weather.getWeatherInfos(userId, value.data);
+        else if (value.description === WidgetName.SPOTIFY_LAST_PLAYED_TRACK)
+          return this.spotify.getLastPlayedTrack(userId, value.data);
+        else
+          throw new BadRequestException;
       })
       .catch((reason: any) => {
         if (reason.code === 'P2003')
