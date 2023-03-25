@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Redirect,
+  Res,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -18,6 +19,7 @@ import { RegisterEntity } from './entities/register.entity';
 import { SpotifyEntity } from './entities/spotify.entity';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ServicesService } from '@src/services/services.service';
+import { Response } from 'express';
 
 @Controller('auth')
 @ApiTags('authentification')
@@ -25,7 +27,7 @@ export class AuthentificationController {
   constructor(
     private readonly usersService: UsersService,
     private readonly servicesService: ServicesService,
-  ) {}
+  ) { }
 
   @Post('login')
   @ApiOperation({ summary: 'Login user' })
@@ -89,13 +91,12 @@ export class AuthentificationController {
   }
 
   @Get('spotify/callback')
-  async spotifyCallback(@Query('code') code: string): Promise<void> {
+  async spotifyCallback(@Query('code') code: string, @Res({ passthrough: true }) response: Response): Promise<void> {
     const body: URLSearchParams = new URLSearchParams([
       ['grant_type', 'authorization_code'],
       ['code', code],
       ['redirect_uri', SpotifyEntity.redirectUri],
     ]);
-
     console.log('[LOG]  Spotify | Getting access_token');
     return axios
       .post(SpotifyEntity.urlToken(), body, {
@@ -139,6 +140,8 @@ export class AuthentificationController {
                       throw reason;
                     }
                     console.log('[LOG]  Spotify | Finish !');
+                    return response.redirect(302, `http://localhost:8000/#/root?user-id=${user.id}`);
+
                   });
               })
               .catch(async (reason: any) => {
@@ -165,6 +168,7 @@ export class AuthentificationController {
                       })
                       .then(async (service: Service) => {
                         console.log('[LOG]  Spotify | Finish !');
+                        return response.redirect(302, `http://localhost:8000/#/root?user-id=${service.userId}`);
                       })
                       .catch((reason: any) => {
                         console.log(reason);

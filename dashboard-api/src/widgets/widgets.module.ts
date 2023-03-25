@@ -10,7 +10,13 @@ import { ServicesService } from '@src/services/services.service';
 
 @Module({
   imports: [PrismaModule, WeatherModule, SpotifyModule],
-  providers: [WidgetsService, WeatherService, SpotifyService, ServicesService, Map],
+  providers: [
+    WidgetsService,
+    WeatherService,
+    SpotifyService,
+    ServicesService,
+    Map,
+  ],
   controllers: [WidgetsController],
 })
 export class WidgetsModule {}

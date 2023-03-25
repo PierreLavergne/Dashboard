@@ -1,6 +1,7 @@
 import 'package:dashboard_front_end/pages/home/home.dart';
 import 'package:dashboard_front_end/utils/api.dart';
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -98,7 +99,29 @@ class _RegisterState extends State<Register> {
                 ),
               ),
             ),
-          )
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 40),
+            child: Divider(
+              thickness: 1,
+              color: Colors.black,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: ElevatedButton(
+                onPressed: () {
+                  html.window.open(Routes.spotify.toString(), "_self");
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                child: const SizedBox(
+                  width: 200,
+                  height: 40,
+                  child: Center(
+                    child: Text("Register with Spotify"),
+                  ),
+                )),
+          ),
         ],
       ),
     );

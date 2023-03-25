@@ -20,13 +20,13 @@ export class WidgetsController {
     private readonly widgetsService: WidgetsService,
     private readonly weather: WeatherService,
     private readonly spotify: SpotifyService,
-    private readonly widgets: Map<string, Function>
-  ) {
-  }
+  ) { }
 
   @Get('')
   @ApiOperation({ summary: 'Get all widgets' })
-  getAll(): void { }
+  getAll(@Headers('User') userId: string,): Promise<Widget[]> {
+    return this.widgetsService.getAllByUserId(userId);
+  }
 
   @Get(':serviceId')
   @ApiOperation({ summary: 'Get widgets by serviceId' })
@@ -50,8 +50,7 @@ export class WidgetsController {
           return this.weather.getWeatherInfos(userId, value.data);
         else if (value.description === WidgetName.SPOTIFY_LAST_PLAYED_TRACK)
           return this.spotify.getLastPlayedTrack(userId, value.data);
-        else
-          throw new BadRequestException;
+        else throw new BadRequestException();
       })
       .catch((reason: any) => {
         if (reason.code === 'P2003')

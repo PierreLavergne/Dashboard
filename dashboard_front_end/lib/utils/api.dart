@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html' as html;
 
+import 'package:dashboard_front_end/utils/models/spotify_response.dart';
 import 'package:dashboard_front_end/utils/models/weather_response.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +11,7 @@ class Routes {
 
   static final Uri register = Uri.parse("$_endpoint/auth/register");
   static final Uri login = Uri.parse("$_endpoint/auth/login");
+  static final Uri spotify = Uri.parse("$_endpoint/auth/spotify");
   static final Uri newWidget = Uri.parse("$_endpoint/widgets");
 }
 
@@ -23,6 +26,10 @@ class Api {
         "Content-Type": "application/json",
         "User": _userId,
       };
+
+  static bool get isLogged => _userId.isNotEmpty;
+
+  static set userId(String userId) => _userId = userId;
 
   static Future<void> register({
     required String email,
@@ -42,7 +49,7 @@ class Api {
       return Future.error(response.body);
     }
     final data = jsonDecode(response.body);
-    _userId = data.id;
+    _userId = data['id'];
   }
 
   static Future<void> login(
@@ -55,8 +62,8 @@ class Api {
     if (response.statusCode != 201) {
       return Future.error(response.body);
     }
-    final data = jsonDecode(response.body);
-    _userId = data.id;
+    final data = json.decode(response.body);
+    _userId = data['id'];
   }
 
   static Future<Map<String, dynamic>> _newWidget(
@@ -83,7 +90,14 @@ class Api {
         "location": location,
       },
     );
-
     return WeatherResponse.fromJson(response);
+  }
+
+  static Future<SpotifyResponse> newSpotifyWidget() async {
+    final response = await _newWidget(
+      description: "SPOTIFY_LAST_PLAYED_TRACK",
+      data: {},
+    );
+    return SpotifyResponse.fromJson(response);
   }
 }

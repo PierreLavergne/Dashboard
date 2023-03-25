@@ -7,7 +7,8 @@
         {
             "name": "dashboard_front_end",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": ["-d", "chrome","--web-port", "8000"],
         },
         {
             "name": "dashboard_front_end (profile mode)",

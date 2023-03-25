@@ -1,7 +1,7 @@
 export class SpotifyResponse {
   description: string;
-  artistName: string;
-  singleName: string;
-  albumName: string;
+  artist: string;
+  single: string;
+  album: string;
   icon: string;
 }

@@ -4,7 +4,7 @@ import { PrismaService } from '@src/prisma/prisma.service';
 
 @Injectable()
 export class WidgetsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(
     data: Omit<Widget, 'id' | 'createdAt' | 'updatedAt'>,
@@ -16,5 +16,9 @@ export class WidgetsService {
         data: data.data ? data.data : undefined,
       },
     });
+  }
+
+  async getAllByUserId(userId: string): Promise<Widget[]> {
+    return this.prisma.widget.findMany({ where: { userId: userId } });
   }
 }
