@@ -1,11 +1,11 @@
-class SpotifyResponse {
+class SpotifyLastSongResponse {
   final String artist;
   final String single;
   final String album;
   final String icon;
 
-  factory SpotifyResponse.fromJson(Map<String, dynamic> json) {
-    return SpotifyResponse(
+  factory SpotifyLastSongResponse.fromJson(Map<String, dynamic> json) {
+    return SpotifyLastSongResponse(
       artist: json["artist"],
       single: json["single"],
       album: json["album"],
@@ -18,7 +18,7 @@ class SpotifyResponse {
     return "$artist, $single, $album, $icon";
   }
 
-  const SpotifyResponse({
+  const SpotifyLastSongResponse({
     required this.artist,
     required this.single,
     required this.album,

@@ -13,6 +13,7 @@ import { NewWidgetEntity } from './entities/newWidget.entity';
 import { Widget, WidgetName } from '@prisma/client';
 import { WeatherService } from './weather/weather.service';
 import { SpotifyService } from './spotify/spotify.service';
+import { FootballService } from './football/football.service';
 
 @Controller('widgets')
 export class WidgetsController {
@@ -20,6 +21,7 @@ export class WidgetsController {
     private readonly widgetsService: WidgetsService,
     private readonly weather: WeatherService,
     private readonly spotify: SpotifyService,
+    private readonly football: FootballService,
   ) { }
 
   @Get('')
@@ -50,6 +52,10 @@ export class WidgetsController {
           return this.weather.getWeatherInfos(userId, value.data);
         else if (value.description === WidgetName.SPOTIFY_LAST_PLAYED_TRACK)
           return this.spotify.getLastPlayedTrack(userId, value.data);
+        else if (value.description === WidgetName.SPOTIFY_MOST_LISTEN_ARTIST_TRACK)
+          return this.spotify.getMostListenArtist(userId, value.data);
+        else if (value.description === WidgetName.FOOTBALL_RESULT)
+          return this.football.getFootballResult(userId, value.data);
         else throw new BadRequestException();
       })
       .catch((reason: any) => {

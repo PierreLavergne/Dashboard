@@ -2,8 +2,6 @@ import 'package:dashboard_front_end/pages/authentication/authentication.dart';
 import 'package:dashboard_front_end/pages/home/home.dart';
 import 'package:dashboard_front_end/utils/api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'dart:html' as html;
 
 class RootPage extends StatefulWidget {

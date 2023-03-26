@@ -7,15 +7,17 @@ import { WeatherService } from './weather/weather.service';
 import { SpotifyModule } from './spotify/spotify.module';
 import { SpotifyService } from './spotify/spotify.service';
 import { ServicesService } from '@src/services/services.service';
+import { FootballModule } from './football/football.module';
+import { FootballService } from './football/football.service';
 
 @Module({
-  imports: [PrismaModule, WeatherModule, SpotifyModule],
+  imports: [PrismaModule, WeatherModule, SpotifyModule, FootballModule],
   providers: [
     WidgetsService,
     WeatherService,
     SpotifyService,
     ServicesService,
-    Map,
+    FootballService
   ],
   controllers: [WidgetsController],
 })

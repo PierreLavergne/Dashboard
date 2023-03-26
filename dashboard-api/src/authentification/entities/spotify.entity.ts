@@ -3,7 +3,7 @@ export class SpotifyEntity {
   static secretId: string = '3a3a2c7d82664cef864b1cd07cebc37b';
   static responseType: string = 'code';
   static redirectUri: string = 'http://127.0.0.1:3000/auth/spotify/callback';
-  static scopes: string = 'user-read-recently-played user-read-email';
+  static scopes: string = 'user-read-recently-played user-read-email user-top-read';
 
   static baseUrl: string = 'https://accounts.spotify.com/';
   static paramsOauth2: string = `authorize?client_id=${this.clientId}&response_type=${this.responseType}&redirect_uri=${this.redirectUri}&scope=${this.scopes}`;
@@ -11,6 +11,7 @@ export class SpotifyEntity {
   static userInfosUrl: string = 'https://api.spotify.com/v1/me';
   static lastPlayedTrackUrl: string =
     'https://api.spotify.com/v1/me/player/recently-played';
+  static mostListenArtistUrl:string = "https://api.spotify.com/v1/me/top/artists?limit=1&time_range=";
 
   static contentType: string = 'application/x-www-form-urlencoded';
 

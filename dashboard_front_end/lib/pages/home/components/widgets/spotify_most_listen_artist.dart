@@ -1,21 +1,23 @@
 import 'package:dashboard_front_end/utils/api.dart';
-import 'package:dashboard_front_end/utils/models/spotify_response.dart';
+import 'package:dashboard_front_end/utils/models/spotify_most_listen_artist_response.dart';
 import 'package:flutter/material.dart';
 
-class SpotifyWidget extends StatefulWidget {
-  const SpotifyWidget({super.key});
+class SpotifyMostListenArtistWidget extends StatefulWidget {
+  const SpotifyMostListenArtistWidget({super.key});
 
   @override
-  State<SpotifyWidget> createState() => _SpotifyWidgetState();
+  State<SpotifyMostListenArtistWidget> createState() =>
+      _SpotifyMostListenArtistWidgetState();
 }
 
-class _SpotifyWidgetState extends State<SpotifyWidget> {
-  late Future<SpotifyResponse> _future;
+class _SpotifyMostListenArtistWidgetState
+    extends State<SpotifyMostListenArtistWidget> {
+  late Future<SpotifyMostListenArtistResponse> _future;
 
   @override
   void initState() {
     super.initState();
-    _future = Api.newSpotifyWidget();
+    _future = Api.newSpotifyMostListenWidget();
   }
 
   @override
@@ -36,7 +38,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget> {
             child: Column(
               children: [
                 const Text(
-                  "Last track played on Spotify",
+                  "Most listen artist on Spotify",
                   style: TextStyle(fontSize: 35),
                 ),
                 Padding(
@@ -46,13 +48,9 @@ class _SpotifyWidgetState extends State<SpotifyWidget> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Text(
-                    snapshot.data!.single,
+                    snapshot.data!.artist,
                     style: const TextStyle(fontSize: 30),
                   ),
-                ),
-                Text(
-                  snapshot.data!.artist,
-                  style: const TextStyle(fontSize: 20, color: Colors.grey),
                 ),
               ],
             ),
